@@ -40,11 +40,16 @@ export const useCalcStore = defineStore("calculator", {
     },
 
     operatorF(operator) {
+      // to do: user can input negative value
+      if(operator === '-') {
+        this.current += operator
+      }
+
       // check if the current number is 0
       // if yes then you users can't use any operator
       // if the operator has already a operator
       // then users can't append any operator
-      if(this.current === 0 || this.operator === '+' || this.operator === '-' || this.operator === '*' || this.operator === '/') {
+      if(this.current === 0 || this.operator === '+' || this.operator === '*' || this.operator === '/') {
         return
       } else {
         this.operator = operator
