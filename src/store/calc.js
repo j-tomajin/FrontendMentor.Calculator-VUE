@@ -67,7 +67,11 @@ export const useCalcStore = defineStore("calculator", {
     },
 
     calculate() {
+      // if the current value is only '-' or '.'
+      // there will be an error to the eval so,
+      // when calculate() is called, the function will return
       if(this.current === '-' || this.current === '.') return
+      
       // checks if the operator is '-' and 
       // if the current value is less than 0 (negative value)
       // if these conditions are true then the operator will reset
