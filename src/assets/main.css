@@ -2,5 +2,5 @@
 
 #app {
   width: min(calc(100% - 3rem), 500px);
-  margin-inline: auto;
+  margin: 50px auto;
 }
