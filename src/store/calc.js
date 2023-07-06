@@ -12,6 +12,8 @@ export const useCalcStore = defineStore("calculator", {
     resetDisplay() {
       // resets the current value
       this.current = 0
+      this.prevValue = 0
+      this.operator = ''
     },
 
     concatNum(num) {
@@ -32,6 +34,8 @@ export const useCalcStore = defineStore("calculator", {
         // than 1 '.'
         if(num == '.' && this.current.toString().includes('.')) return
         this.current += num
+
+        // this.current.toString().includes('-') || this.prevValue != 0
       }
     },
 
@@ -40,30 +44,39 @@ export const useCalcStore = defineStore("calculator", {
     },
 
     operatorF(operator) {
-      // to do: user can input negative value
-      if(operator === '-') {
-        this.current += operator
-      }
-
-      // check if the current number is 0
-      // if yes then you users can't use any operator
-      // if the operator has already a operator
-      // then users can't append any operator
-      if(this.current === 0 || this.operator === '+' || this.operator === '*' || this.operator === '/') {
+      // check if the current value is equal to 0
+      // if yes then the current value will add the operator
+      // so the current value will be negative
+      // if not then, the operator will be the arithmethic operator 
+      if(operator === '-' && this.current === 0) {
+        this.current = operator
         return
-      } else {
-        this.operator = operator
-        this.prevValue = this.current
-        this.current = 0
       }
+      
+      if(this.operator === '-') {
+        if(this.current.toString().includes('-')) return
+      }
+      
+      // check if the operator is already picked
+      // if yes then, the user can't pick another operator
+      if(this.operator === '+' || this.operator === '-' || this.operator === '*' || this.operator === '/') return
+
+      this.operator = operator
+      this.prevValue = this.current
+      this.current = 0
     },
 
     calculate() {
-      // check if the previous value is zero
-      // if yes, since it will be an error
-      // it will return, the users need to add an operator 
-      // so the previous value will have a value
-      if(this.prevValue == 0) return
+      if(this.current === '-' || this.current === '.') return
+      // checks if the operator is '-' and 
+      // if the current value is less than 0 (negative value)
+      // if these conditions are true then the operator will reset
+      // since the output will be `33--333`
+      if(this.operator === '-' && this.current < 0) {
+        this.operator = ''
+      }
+
+      // calculate 
       this.current = eval(
         this.prevValue + this.operator + this.current
       )
