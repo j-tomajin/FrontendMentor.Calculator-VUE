@@ -63,7 +63,7 @@
 
   .display {
     background-color: var(--clr-background-screen);
-    color: var(--clr-text-light);
+    color: var(--clr-text-dark);
     padding: rem(24);
     text-align: right;
     margin-bottom: rem(32);
@@ -71,6 +71,10 @@
     flex-direction: column;
     line-height: 1;
     
+    h2, span {
+      color: var(--clr-text-alt);
+    }
+
     h2 {
       font-size: rem(64);
       width: 100%;
